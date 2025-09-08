@@ -2,6 +2,8 @@ from flask import Flask
 from flask_smorest import Api
 
 from app.config import APIConfig, DatabaseConfig, db, migrate
+from app.models.students import Student
+from app.models.courses import Course
 
 
 def create_app() -> Flask:
