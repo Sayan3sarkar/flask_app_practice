@@ -2,8 +2,6 @@ from flask import Flask
 from flask_smorest import Api
 
 from app.config import APIConfig, DatabaseConfig, db, migrate
-from app.models.students import Student
-from app.models.courses import Course
 
 
 def create_app() -> Flask:
@@ -14,9 +12,12 @@ def create_app() -> Flask:
     db.init_app(app)  # Database initialization
     migrate.init_app(app)  # Migration initialization
 
-    from app.routes import health_api
+    from app.routes import health_api, student_api, course_api
 
     api.register_blueprint(health_api)
+    api.register_blueprint(student_api)
+    api.register_blueprint(course_api)
+
     return app
 
 
