@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 from sqlalchemy import String
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
@@ -20,9 +20,12 @@ class Student(db.Model, TimestampMixin):
     name: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(100), nullable=False)
     courses: Mapped[list["Course"]] = relationship(
-        secondary=course_registration, backref="students"
+        secondary=course_registration, back_populates="students"
     )
 
     def __repr__(self) -> str:
         super()
         return f"Student {self.name} having email: {self.created_at}"
+
+    def to_dict(self) -> dict[str, Union[str, int]]:
+        return {"id": self.id, "name": self.name, "email": self.email}

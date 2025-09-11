@@ -25,3 +25,12 @@ class Course(db.Model, TimestampMixin):
     students: Mapped[list["Student"]] = relationship(
         secondary=course_registration, back_populates="courses"
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+        }
